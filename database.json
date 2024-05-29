@@ -1,0 +1,16 @@
+{
+    "dev": {
+      "driver": "pg",
+      "host": "127.0.0.1",
+      "database": "mazdurr",
+      "user": "mazdurr_user",
+      "password": "password123"
+    },
+    "test": {
+      "driver": "pg",
+      "host": "127.0.0.1",
+      "database": "mazdurr_test",
+      "user": "mazdurr_test_user",
+      "password": "password123"
+    }
+  }
