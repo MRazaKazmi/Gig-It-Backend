@@ -9,7 +9,7 @@ dotenv.config();
 // const saltRounds = process.env.SALT_ROUNDS as string;
 // const secret = process.env.JWT_SECRET as string;
 
-export interface User {
+export type User = {
     userid?: number;
     username: string;
     email: string;
@@ -28,7 +28,7 @@ export class UserStore {
 
         try {
             const sql =
-                'INSERT INTO users (username, email, password, usertype) VALUES ($1, $2, $3, $4) RETURNING *'
+                'INSERT INTO mazdurr.users (username, email, password, usertype) VALUES ($1, $2, $3, $4) RETURNING *'
 
             const result = await conn.query(sql, [
                 newUser.username,
@@ -56,7 +56,7 @@ export class UserStore {
         const conn = await pool.connect();
 
         try {
-            const sql = 'SELECT * FROM users';
+            const sql = 'SELECT * FROM mazdurr.users';
             const result = await conn.query(sql);
 
             conn.release();
@@ -74,7 +74,7 @@ export class UserStore {
         const conn = await pool.connect();
 
         try {
-            const sql = 'SELECT * FROM users WHERE userid=$1';
+            const sql = 'SELECT * FROM mazdurr.users WHERE userid=$1';
             const result = await conn.query(sql, [userid]);
 
             conn.release();
@@ -90,7 +90,7 @@ export class UserStore {
 
     async delete(userid: number): Promise<User> {
         try {
-          const sql = "DELETE FROM users WHERE userid = $1";
+          const sql = "DELETE FROM mazdurr.users WHERE userid = $1";
           const conn = await pool.connect();
 
           const result = await conn.query(sql, [userid]);

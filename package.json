@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node dist/server.js",
     "build": "npx tsc",
-    "test": "db-migrate --env test up && ENV=test jasmine && db-migrate --env test down"
+    "test": "db-migrate --env test up && ENV=test jasmine && db-migrate --env test reset"
   },
   "keywords": [],
   "author": "",
