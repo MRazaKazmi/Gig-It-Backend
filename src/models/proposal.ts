@@ -42,12 +42,12 @@ export class ProposalStore {
         }
     }
 
-    async index(): Promise<Proposal[]> {
+    async index(gigid:number): Promise<Proposal[]> {
         const conn = await pool.connect();
 
         try {
-            const sql = 'SELECT * FROM mazdurr.proposals';
-            const result = await conn.query(sql);
+            const sql = 'SELECT * FROM mazdurr.proposals WHERE gigid=$1';
+            const result = await conn.query(sql, [gigid]);
 
             conn.release();
             return result.rows;

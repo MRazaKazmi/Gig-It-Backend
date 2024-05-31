@@ -99,7 +99,7 @@ beforeAll(async () => {
   });
 
   it('index method should return a list of proposals', async () => {
-    const result = await proposalStore.index();
+    const result = await proposalStore.index(testGig.gigid!);
     expect(result.length).toBe(1)
     expect(result[0].coverletter).toEqual(testProposal.coverletter);
     expect(result[0].status).toEqual(testProposal.status);
@@ -113,7 +113,7 @@ beforeAll(async () => {
 
   it('delete method should remove the proposal', async () => {
     await proposalStore.delete(testProposal.proposalid!);
-    const result = await proposalStore.index()
+    const result = await proposalStore.index(testGig.gigid!)
 
     expect(result).toEqual([]);
   });

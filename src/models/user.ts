@@ -1,13 +1,13 @@
 import pool from '../database';
-// import bcrypt from 'bcrypt';
+import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
-// import jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 
 dotenv.config();
 
-// const pepper = process.env.BCRYPT_PASSWORD as string;
-// const saltRounds = process.env.SALT_ROUNDS as string;
-// const secret = process.env.JWT_SECRET as string;
+const pepper = process.env.BCRYPT_PASSWORD as string;
+const saltRounds = process.env.SALT_ROUNDS as string;
+const secret = process.env.JWT_SECRET as string;
 
 export type User = {
     userid?: number;
@@ -19,10 +19,10 @@ export type User = {
 
 export class UserStore {
     async create(newUser: User): Promise<User> {
-        // const passwordHash = bcrypt.hashSync(
-        //     newUser.Password + pepper,
-        //     parseInt(saltRounds)
-        // );
+        const passwordHash = bcrypt.hashSync(
+            newUser.password + pepper,
+            parseInt(saltRounds)
+        );
 
         const conn = await pool.connect();
 
@@ -33,7 +33,7 @@ export class UserStore {
             const result = await conn.query(sql, [
                 newUser.username,
                 newUser.email,
-                newUser.password,
+                passwordHash,
                 newUser.usertype,
 
             ]);
