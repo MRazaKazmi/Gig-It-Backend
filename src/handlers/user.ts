@@ -64,8 +64,37 @@ const read = async (req: Request, res: Response) => {
   }
 }
 
+const authenticate = async (req: Request, res: Response) => {
+  try {
+    const email = req.body.email as unknown as string
+    const password = req.body.password as unknown as string
+
+    if (email === undefined || password === undefined) {
+      res.status(400)
+      res.send("Some required parameters are missing! eg. :username, :password")
+      return false
+    }
+
+    const user: User | null = await UserStoreInstance.authenticate(email, password)
+
+    if (user === null) {
+      res.status(401)
+      res.send(`Wrong password for user ${email}.`)
+
+      return false
+    }
+
+    res.json({ token: createUserAuthToken(user) });
+  } catch (e) {
+    res.status(400)
+    res.json(e)
+  }
+}
+
 export default function userRoutes (app: Application) {
     app.get("/users", verifyAuthToken, index)
     app.post("/users/create", create)
     app.get("/users/:id", verifyAuthToken, read)
+    app.post("/users/auth", authenticate)
+
 }

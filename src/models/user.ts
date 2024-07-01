@@ -9,12 +9,13 @@ const pepper = process.env.BCRYPT_PASSWORD as string;
 const saltRounds = process.env.SALT_ROUNDS as string;
 const secret = process.env.JWT_SECRET as string;
 
+
 export type User = {
     userid?: number;
     username: string;
     email: string;
     password: string;
-    usertype: 'Contractor' | 'Client';
+    usertype: string;
 }
 
 export class UserStore {
@@ -105,4 +106,28 @@ export class UserStore {
         }
       }
 
-}
+    async authenticate (email: string, password: string): Promise<User | null> {
+        try {
+            const sql = "SELECT * FROM mazdurr.users WHERE email = $1"
+            const connection = await pool.connect()
+            const {rows} = await connection.query(sql, [email])
+            console.log(rows)
+
+            if (rows.length > 0) {
+            const user = rows[0]
+            console.log(user)
+
+            if (bcrypt.compareSync(password + pepper, user.password)) {
+                return user
+            }
+            }
+
+            connection.release()
+
+            return null
+        } catch (err) {
+            throw new Error(`Could not find user ${email}. ${err}`)
+        }
+        }
+    }
+

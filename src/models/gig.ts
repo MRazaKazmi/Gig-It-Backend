@@ -5,6 +5,7 @@ export type Gig = {
     userid: number;
     title: string;
     description:string;
+    type:string;
     location:string;
     budget: number;
     dateposted: string | Date;
@@ -18,12 +19,13 @@ export class GigStore {
 
         try {
             const sql =
-                'INSERT INTO mazdurr.gigs (userid, title, description, location, budget, dateposted, status) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *'
+                'INSERT INTO mazdurr.gigs (userid, title, description, type, location, budget, dateposted, status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *'
 
             const result = await conn.query(sql, [
                 newGig.userid,
                 newGig.title,
                 newGig.description,
+                newGig.type,
                 newGig.location,
                 newGig.budget,
                 newGig.dateposted,

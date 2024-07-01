@@ -95,4 +95,40 @@ export class ProposalStore {
         }
       }
 
+      async readProposalsForUser(userid: number) {
+        try {
+          const sql = "SELECT p.proposalid, p.gigid, p.coverletter, p.bidamount, p.status, p.datesubmitted, \
+            g.title as gigtitle FROM mazdurr.proposals p JOIN mazdurr.gigs g ON p.gigid = g.gigid \
+            WHERE g.userid = $1"
+
+          const conn = await pool.connect();
+
+          const result = await conn.query(sql, [userid]);
+
+          conn.release();
+
+          return result.rows;
+        } catch (err) {
+          throw new Error(`Could not delete proposal ${userid}. Error: ${err}`);
+        }
+      }
+
+      async readProposalsForPUser(userid: number) {
+        try {
+          const sql = "SELECT p.proposalid, p.gigid, p.coverletter, p.bidamount, p.status, p.datesubmitted, \
+            g.title as gigtitle FROM mazdurr.proposals p JOIN mazdurr.gigs g ON p.gigid = g.gigid \
+            WHERE p.userid = $1"
+
+          const conn = await pool.connect();
+
+          const result = await conn.query(sql, [userid]);
+
+          conn.release();
+
+          return result.rows;
+        } catch (err) {
+          throw new Error(`Could not delete proposal ${userid}. Error: ${err}`);
+        }
+      }
+
 }

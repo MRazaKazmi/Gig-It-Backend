@@ -7,14 +7,16 @@ import userRoutes from "./handlers/user"
 import GigRoutes from "./handlers/gig"
 import ProposalRoutes from "./handlers/proposal"
 
-
+const cors = require('cors');
 
 const app = express()
 
-let port: number = 3000
+app.use(cors());
+
+let port: number = 80
 
 if (process.env.ENV === "test") {
-  port = 3001
+  port = 81
 }
 
 const address: string = `127.0.0.1:${port}`

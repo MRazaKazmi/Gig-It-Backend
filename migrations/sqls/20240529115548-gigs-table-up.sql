@@ -5,6 +5,7 @@ CREATE TABLE mazdurr.gigs (
     UserID INT REFERENCES mazdurr.users(UserID),
     Title VARCHAR(100) NOT NULL,
     Description TEXT,
+    Type TEXT,
     Location TEXT,
     Budget NUMERIC(10,2),
     DatePosted TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

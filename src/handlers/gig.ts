@@ -17,14 +17,23 @@ const index = async (req: Request, res: Response) => {
 
 const create = async (req: Request, res: Response) => {
   try {
-    const { userid, title, description, location, budget, dateposted, status } = req.body;
+    const { userid, title, description, type, location, budget, dateposted, status } = req.body;
 
-    if (userid === undefined || title === undefined || description === undefined || location === undefined || budget === undefined || dateposted === undefined || status === undefined) {
+    if (userid === undefined || title === undefined || description === undefined || type === undefined ||location === undefined || budget === undefined || dateposted === undefined || status === undefined) {
+      const missingParameters = [];
+      if (title === undefined) missingParameters.push('title');
+      if (description === undefined) missingParameters.push('description');
+      if (type === undefined) missingParameters.push('type');
+      if (location === undefined) missingParameters.push('location');
+      if (budget === undefined) missingParameters.push('budget');
+      if (dateposted === undefined) missingParameters.push('dateposted');
+      if (status === undefined) missingParameters.push('status');
+
       res.status(400)
-      res.send("Some required parameters are missing! eg. :products, :status, :user_id")
+      res.send(`Some required parameters are missing: ${missingParameters.join(', ')}`);
       return false
     }
-    const gig = { userid, title, description, location, budget, dateposted, status};
+    const gig = { userid, title, description, type, location, budget, dateposted, status};
 
     const newGig: Gig = await GigStoreInstance.create(gig)
 

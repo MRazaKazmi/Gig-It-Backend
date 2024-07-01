@@ -5,9 +5,27 @@ import {NextFunction, Request, Response} from "express"
 const SECRET = process.env.JWT_SECRET as Secret
 
 export function createUserAuthToken (user: User) {
-  return jwt.sign({user}, SECRET)
-}
+    const payload = {
+    userid: user.userid, // Include user ID in the payload
+    email: user.email,
+    usertype: user.usertype,
+    username:user.username
+  };
+  const options = { expiresIn: '1h' };
 
+  return jwt.sign(payload, SECRET, options);
+};
+// export function createUserAuthToken (user: User) {
+//   return jwt.sign(
+//     {
+//       userid: user.userid,
+//       usertype: user.usertype, // Include usertype in the payload
+//       email: user.email
+//     },
+//     SECRET,
+//     { expiresIn: '1h' }
+//   );
+// };
 export function verifyAuthToken (req: Request, res: Response, next: NextFunction): void | boolean {
   if (!req.headers.authorization) {
 

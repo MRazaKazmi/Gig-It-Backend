@@ -24,6 +24,7 @@ describe("Proposal Model", () => {
     userid: 1,
     title: 'testtitle',
     description: 'testdescription',
+    type:'testtype',
     location: 'testlocation',
     budget: 100,
     dateposted: '01/01/2024',
@@ -54,6 +55,7 @@ beforeAll(async () => {
         title: 'testtitle',
         description: 'testdescription',
         location: 'testlocation',
+        type:'testtype',
         budget: 100,
         dateposted: '01/01/2024',
         status: 'Open'

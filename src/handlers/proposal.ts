@@ -22,12 +22,19 @@ const create = async (req: Request, res: Response) => {
     const gigid = req.params.gig_id as unknown as number;
 
     const { userid, coverletter, bidamount, status, datesubmitted } = req.body;
-
     if (userid === undefined || coverletter === undefined || bidamount === undefined || status === undefined || datesubmitted === undefined) {
+      const missingParameters = [];
+      if (userid === undefined) missingParameters.push('userid');
+      if (coverletter === undefined) missingParameters.push('coverletter');
+      if (bidamount === undefined) missingParameters.push('bidamount');
+      if (status === undefined) missingParameters.push('status');
+      if (datesubmitted === undefined) missingParameters.push('datesubmitted');
+
       res.status(400)
-      res.send("Some required parameters are missing! eg. :products, :status, :user_id")
+      res.send(`Some required parameters are missing: ${missingParameters.join(', ')}`);
       return false
     }
+
     const proposal = { userid, gigid, coverletter, bidamount, status, datesubmitted};
 
     const newProposal: Proposal = await ProposalStoreInstance.create(proposal)
@@ -58,9 +65,34 @@ const read = async (req: Request, res: Response) => {
   }
 }
 
+const readProposalsForUser = async (req: Request, res: Response) => {
+  try {
+    const userid = req.params.userId as unknown as number;
+    const proposalsForUser = await ProposalStoreInstance.readProposalsForUser(userid)
+
+    res.json(proposalsForUser)
+  } catch (e) {
+    res.status(400)
+    res.json(e)
+  }
+}
+
+const readProposalsForPUser = async (req: Request, res: Response) => {
+  try {
+    const userid = req.params.userId as unknown as number;
+    const proposalsForPUser = await ProposalStoreInstance.readProposalsForPUser(userid)
+
+    res.json(proposalsForPUser)
+  } catch (e) {
+    res.status(400)
+    res.json(e)
+  }
+}
+
 
   export default function ProposalRoutes (app: Application) {
   app.get("/gigs/:gig_id/proposals", verifyAuthToken, index)
   app.post("/gigs/:gig_id/proposals/create", verifyAuthToken, create)
   app.get("/gigs/:gig_id/proposals/:id", verifyAuthToken, read)
-}
+  app.get('/proposals/user/:userId', verifyAuthToken,readProposalsForUser ),
+  app.get('/proposals/p_user/:userId', verifyAuthToken,readProposalsForPUser )}
