@@ -64,9 +64,23 @@ const read = async (req: Request, res: Response) => {
 }
 
 
+const updateGigStatus = async (req: Request, res: Response) => {
+  try {
+    const gigid = req.params.GigId as unknown as number;
+    const { status } = req.body;
+    const updateGigStatus = await GigStoreInstance.updateGigStatus(status, gigid);
 
-export default function orderRoutes (app: Application) {
+    res.json(updateGigStatus)
+  } catch (e) {
+    res.status(400)
+    res.json(e)
+  }
+}
+
+
+  export default function orderRoutes (app: Application) {
   app.get("/gigs", verifyAuthToken, index)
   app.post("/gigs/create", verifyAuthToken, create)
   app.get("/gigs/:id", verifyAuthToken, read)
-}
+  app.patch('/gigs/:GigId/status', verifyAuthToken, updateGigStatus)}
+

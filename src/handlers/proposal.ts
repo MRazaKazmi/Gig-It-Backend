@@ -90,9 +90,49 @@ const readProposalsForPUser = async (req: Request, res: Response) => {
 }
 
 
+const updateProposalStatus = async (req: Request, res: Response) => {
+  try {
+    const proposalid = req.params.proposalId as unknown as number;
+    const { status } = req.body;
+    const updateProposalStatus = await ProposalStoreInstance.updateProposalStatus(status, proposalid);
+
+    res.json(updateProposalStatus)
+  } catch (e) {
+    res.status(400)
+    res.json(e)
+  }
+}
+
+const getProposalsWithGigsPUser = async (req: Request, res: Response) => {
+  try {
+    const userid = req.params.userId as unknown as number;
+    const proposalsWithGigsPUser = await ProposalStoreInstance.getProposalsWithGigsPUser(userid);
+    res.json(proposalsWithGigsPUser);
+  } catch (e) {
+    res.status(400);
+    res.json(e);
+  }
+};
+
+const getProposalsWithGigs = async (req: Request, res: Response) => {
+  try {
+    const userid = req.params.userId as unknown as number;
+    const proposalsWithGigs = await ProposalStoreInstance.getProposalsWithGigs(userid);
+    res.json(proposalsWithGigs);
+  } catch (e) {
+    res.status(400);
+    res.json(e);
+  }
+};
+
+
   export default function ProposalRoutes (app: Application) {
   app.get("/gigs/:gig_id/proposals", verifyAuthToken, index)
   app.post("/gigs/:gig_id/proposals/create", verifyAuthToken, create)
   app.get("/gigs/:gig_id/proposals/:id", verifyAuthToken, read)
-  app.get('/proposals/user/:userId', verifyAuthToken,readProposalsForUser ),
-  app.get('/proposals/p_user/:userId', verifyAuthToken,readProposalsForPUser )}
+  app.get('/proposals/user/:userId', verifyAuthToken,readProposalsForUser )
+  app.get('/proposals/p_user/:userId', verifyAuthToken,readProposalsForPUser )
+  app.patch('/proposals/:proposalId/status', verifyAuthToken, updateProposalStatus)
+  app.get('/proposalswithgigs/p_user/:userId', verifyAuthToken,getProposalsWithGigsPUser )
+  app.get('/proposalswithgigs/user/:userId', verifyAuthToken,getProposalsWithGigs)
+}

@@ -118,5 +118,49 @@ class ProposalStore {
             }
         });
     }
+    updateProposalStatus(status, proposalid) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const sql = "UPDATE mazdurr.proposals SET status = $1 WHERE proposalid = $2 RETURNING *";
+                const conn = yield database_1.default.connect();
+                const result = yield conn.query(sql, [status, proposalid]);
+                conn.release();
+                return result.rows;
+            }
+            catch (err) {
+                throw new Error(` Error: ${err}`);
+            }
+        });
+    }
+    getProposalsWithGigsPUser(userid) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const sql = "SELECT p.proposalid, p.coverletter, p.bidamount, p.status, p.datesubmitted,g.title, \
+          g.type FROM mazdurr.proposals p JOIN mazdurr.gigs g ON p.gigid = g.gigid WHERE p.userid = $1";
+                const conn = yield database_1.default.connect();
+                const result = yield conn.query(sql, [userid]);
+                conn.release();
+                return result.rows;
+            }
+            catch (err) {
+                throw new Error(` Error: ${err}`);
+            }
+        });
+    }
+    getProposalsWithGigs(userid) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const sql = "SELECT p.proposalid, p.coverletter, p.bidamount, p.status, p.datesubmitted,g.title, \
+          g.type FROM mazdurr.proposals p JOIN mazdurr.gigs g ON p.gigid = g.gigid WHERE g.userid = $1";
+                const conn = yield database_1.default.connect();
+                const result = yield conn.query(sql, [userid]);
+                conn.release();
+                return result.rows;
+            }
+            catch (err) {
+                throw new Error(` Error: ${err}`);
+            }
+        });
+    }
 }
 exports.ProposalStore = ProposalStore;

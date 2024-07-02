@@ -91,11 +91,48 @@ const readProposalsForPUser = (req, res) => __awaiter(void 0, void 0, void 0, fu
         res.json(e);
     }
 });
+const updateProposalStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const proposalid = req.params.proposalId;
+        const { status } = req.body;
+        const updateProposalStatus = yield ProposalStoreInstance.updateProposalStatus(status, proposalid);
+        res.json(updateProposalStatus);
+    }
+    catch (e) {
+        res.status(400);
+        res.json(e);
+    }
+});
+const getProposalsWithGigsPUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const userid = req.params.userId;
+        const proposalsWithGigsPUser = yield ProposalStoreInstance.getProposalsWithGigsPUser(userid);
+        res.json(proposalsWithGigsPUser);
+    }
+    catch (e) {
+        res.status(400);
+        res.json(e);
+    }
+});
+const getProposalsWithGigs = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const userid = req.params.userId;
+        const proposalsWithGigs = yield ProposalStoreInstance.getProposalsWithGigs(userid);
+        res.json(proposalsWithGigs);
+    }
+    catch (e) {
+        res.status(400);
+        res.json(e);
+    }
+});
 function ProposalRoutes(app) {
     app.get("/gigs/:gig_id/proposals", helpers_1.verifyAuthToken, index);
     app.post("/gigs/:gig_id/proposals/create", helpers_1.verifyAuthToken, create);
     app.get("/gigs/:gig_id/proposals/:id", helpers_1.verifyAuthToken, read);
-    app.get('/proposals/user/:userId', helpers_1.verifyAuthToken, readProposalsForUser),
-        app.get('/proposals/p_user/:userId', helpers_1.verifyAuthToken, readProposalsForPUser);
+    app.get('/proposals/user/:userId', helpers_1.verifyAuthToken, readProposalsForUser);
+    app.get('/proposals/p_user/:userId', helpers_1.verifyAuthToken, readProposalsForPUser);
+    app.patch('/proposals/:proposalId/status', helpers_1.verifyAuthToken, updateProposalStatus);
+    app.get('/proposalswithgigs/p_user/:userId', helpers_1.verifyAuthToken, getProposalsWithGigsPUser);
+    app.get('/proposalswithgigs/user/:userId', helpers_1.verifyAuthToken, getProposalsWithGigs);
 }
 exports.default = ProposalRoutes;

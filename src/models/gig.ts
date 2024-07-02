@@ -99,4 +99,22 @@ export class GigStore {
         }
       }
 
+      async updateGigStatus(status: string, gigid: number) {
+
+        try {
+
+          const sql = "UPDATE mazdurr.gigs SET status = $1 WHERE gigid = $2 RETURNING *"
+
+          const conn = await pool.connect();
+
+          const result = await conn.query(sql, [status, gigid]);
+
+          conn.release();
+
+          return result.rows;
+        } catch (err) {
+          throw new Error(` Error: ${err}`);
+        }
+      }
+
 }

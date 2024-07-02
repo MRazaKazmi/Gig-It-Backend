@@ -70,9 +70,22 @@ const read = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.json(e);
     }
 });
+const updateGigStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const gigid = req.params.GigId;
+        const { status } = req.body;
+        const updateGigStatus = yield GigStoreInstance.updateGigStatus(status, gigid);
+        res.json(updateGigStatus);
+    }
+    catch (e) {
+        res.status(400);
+        res.json(e);
+    }
+});
 function orderRoutes(app) {
     app.get("/gigs", helpers_1.verifyAuthToken, index);
     app.post("/gigs/create", helpers_1.verifyAuthToken, create);
     app.get("/gigs/:id", helpers_1.verifyAuthToken, read);
+    app.patch('/gigs/:GigId/status', helpers_1.verifyAuthToken, updateGigStatus);
 }
 exports.default = orderRoutes;

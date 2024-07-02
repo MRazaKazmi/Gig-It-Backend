@@ -131,4 +131,61 @@ export class ProposalStore {
         }
       }
 
-}
+      async updateProposalStatus(status: string, proposalid: number) {
+
+        try {
+
+          const sql = "UPDATE mazdurr.proposals SET status = $1 WHERE proposalid = $2 RETURNING *"
+
+          const conn = await pool.connect();
+
+          const result = await conn.query(sql, [status, proposalid]);
+
+          conn.release();
+
+          return result.rows;
+        } catch (err) {
+          throw new Error(` Error: ${err}`);
+        }
+      }
+
+      async getProposalsWithGigsPUser(userid: number) {
+
+        try {
+
+          const sql = "SELECT p.proposalid, p.coverletter, p.bidamount, p.status, p.datesubmitted,g.title, \
+          g.type FROM mazdurr.proposals p JOIN mazdurr.gigs g ON p.gigid = g.gigid WHERE p.userid = $1"
+
+
+          const conn = await pool.connect();
+
+          const result = await conn.query(sql, [userid]);
+
+          conn.release();
+
+          return result.rows;
+        } catch (err) {
+          throw new Error(` Error: ${err}`);
+        }
+      }
+      async getProposalsWithGigs(userid: number) {
+
+        try {
+
+          const sql = "SELECT p.proposalid, p.coverletter, p.bidamount, p.status, p.datesubmitted,g.title, \
+          g.type FROM mazdurr.proposals p JOIN mazdurr.gigs g ON p.gigid = g.gigid WHERE g.userid = $1"
+
+
+          const conn = await pool.connect();
+
+          const result = await conn.query(sql, [userid]);
+
+          conn.release();
+
+          return result.rows;
+        } catch (err) {
+          throw new Error(` Error: ${err}`);
+        }
+      }
+
+    }

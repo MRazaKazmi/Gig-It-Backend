@@ -88,5 +88,19 @@ class GigStore {
             }
         });
     }
+    updateGigStatus(status, gigid) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const sql = "UPDATE mazdurr.gigs SET status = $1 WHERE gigid = $2 RETURNING *";
+                const conn = yield database_1.default.connect();
+                const result = yield conn.query(sql, [status, gigid]);
+                conn.release();
+                return result.rows;
+            }
+            catch (err) {
+                throw new Error(` Error: ${err}`);
+            }
+        });
+    }
 }
 exports.GigStore = GigStore;
