@@ -82,5 +82,6 @@ const updateGigStatus = async (req: Request, res: Response) => {
   app.get("/gigs", verifyAuthToken, index)
   app.post("/gigs/create", verifyAuthToken, create)
   app.get("/gigs/:id", verifyAuthToken, read)
-  app.patch('/gigs/:GigId/status', verifyAuthToken, updateGigStatus)}
+  app.patch('/gigs/:GigId/status', verifyAuthToken, updateGigStatus)
+}
 

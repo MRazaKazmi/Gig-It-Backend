@@ -135,7 +135,7 @@ class ProposalStore {
     getProposalsWithGigsPUser(userid) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const sql = "SELECT p.proposalid, p.coverletter, p.bidamount, p.status, p.datesubmitted,g.title, \
+                const sql = "SELECT p.proposalid, p.gigid, p.coverletter, p.bidamount, p.status, p.datesubmitted,g.title, \
           g.type FROM mazdurr.proposals p JOIN mazdurr.gigs g ON p.gigid = g.gigid WHERE p.userid = $1";
                 const conn = yield database_1.default.connect();
                 const result = yield conn.query(sql, [userid]);
@@ -150,7 +150,7 @@ class ProposalStore {
     getProposalsWithGigs(userid) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const sql = "SELECT p.proposalid, p.coverletter, p.bidamount, p.status, p.datesubmitted,g.title, \
+                const sql = "SELECT p.proposalid, p.gigid, p.coverletter, p.bidamount, p.status, p.datesubmitted,g.title, \
           g.type FROM mazdurr.proposals p JOIN mazdurr.gigs g ON p.gigid = g.gigid WHERE g.userid = $1";
                 const conn = yield database_1.default.connect();
                 const result = yield conn.query(sql, [userid]);

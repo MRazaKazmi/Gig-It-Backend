@@ -153,7 +153,7 @@ export class ProposalStore {
 
         try {
 
-          const sql = "SELECT p.proposalid, p.coverletter, p.bidamount, p.status, p.datesubmitted,g.title, \
+          const sql = "SELECT p.proposalid, p.gigid, p.coverletter, p.bidamount, p.status, p.datesubmitted,g.title, \
           g.type FROM mazdurr.proposals p JOIN mazdurr.gigs g ON p.gigid = g.gigid WHERE p.userid = $1"
 
 
@@ -172,7 +172,7 @@ export class ProposalStore {
 
         try {
 
-          const sql = "SELECT p.proposalid, p.coverletter, p.bidamount, p.status, p.datesubmitted,g.title, \
+          const sql = "SELECT p.proposalid, p.gigid, p.coverletter, p.bidamount, p.status, p.datesubmitted,g.title, \
           g.type FROM mazdurr.proposals p JOIN mazdurr.gigs g ON p.gigid = g.gigid WHERE g.userid = $1"
 
 
