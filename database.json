@@ -1,17 +1,15 @@
 {
     "dev": {
       "driver": "pg",
-      "host": "127.0.0.1",
+      "host": "mazdurr.c94ueg8m8rb2.eu-north-1.rds.amazonaws.com",
       "database": "mazdurr",
-      "schema": "mazdurr",
       "user": "postgres",
       "password": "password123"
     },
     "test": {
       "driver": "pg",
-      "host": "127.0.0.1",
+      "host": "mazdurr.c94ueg8m8rb2.eu-north-1.rds.amazonaws.com",
       "database": "mazdurr_test",
-      "schema": "mazdurr",
       "user": "postgres",
       "password": "password123"
     }

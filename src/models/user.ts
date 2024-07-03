@@ -29,7 +29,7 @@ export class UserStore {
 
         try {
             const sql =
-                'INSERT INTO mazdurr.users (username, email, password, usertype) VALUES ($1, $2, $3, $4) RETURNING *'
+                'INSERT INTO users (username, email, password, usertype) VALUES ($1, $2, $3, $4) RETURNING *'
 
             const result = await conn.query(sql, [
                 newUser.username,
@@ -57,7 +57,7 @@ export class UserStore {
         const conn = await pool.connect();
 
         try {
-            const sql = 'SELECT * FROM mazdurr.users';
+            const sql = 'SELECT * FROM users';
             const result = await conn.query(sql);
 
             conn.release();
@@ -75,7 +75,7 @@ export class UserStore {
         const conn = await pool.connect();
 
         try {
-            const sql = 'SELECT * FROM mazdurr.users WHERE userid=$1';
+            const sql = 'SELECT * FROM users WHERE userid=$1';
             const result = await conn.query(sql, [userid]);
 
             conn.release();
@@ -91,7 +91,7 @@ export class UserStore {
 
     async delete(userid: number): Promise<User> {
         try {
-          const sql = "DELETE FROM mazdurr.users WHERE userid = $1";
+          const sql = "DELETE FROM users WHERE userid = $1";
           const conn = await pool.connect();
 
           const result = await conn.query(sql, [userid]);
@@ -108,7 +108,7 @@ export class UserStore {
 
     async authenticate (email: string, password: string): Promise<User | null> {
         try {
-            const sql = "SELECT * FROM mazdurr.users WHERE email = $1"
+            const sql = "SELECT * FROM users WHERE email = $1"
             const connection = await pool.connect()
             const {rows} = await connection.query(sql, [email])
             console.log(rows)

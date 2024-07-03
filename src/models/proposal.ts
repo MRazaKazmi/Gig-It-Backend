@@ -17,7 +17,7 @@ export class ProposalStore {
 
         try {
             const sql =
-                'INSERT INTO mazdurr.proposals (userid, gigid, coverletter, bidamount, status, datesubmitted) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *'
+                'INSERT INTO proposals (userid, gigid, coverletter, bidamount, status, datesubmitted) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *'
 
             const result = await conn.query(sql, [
                 newProposal.userid,
@@ -46,7 +46,7 @@ export class ProposalStore {
         const conn = await pool.connect();
 
         try {
-            const sql = 'SELECT * FROM mazdurr.proposals WHERE gigid=$1';
+            const sql = 'SELECT * FROM proposals WHERE gigid=$1';
             const result = await conn.query(sql, [gigid]);
 
             conn.release();
@@ -64,7 +64,7 @@ export class ProposalStore {
         const conn = await pool.connect();
 
         try {
-            const sql = 'SELECT * FROM mazdurr.proposals WHERE proposalid=$1';
+            const sql = 'SELECT * FROM proposals WHERE proposalid=$1';
             const result = await conn.query(sql, [proposalid]);
 
             conn.release();
@@ -80,7 +80,7 @@ export class ProposalStore {
 
     async delete(proposalid: number): Promise<Proposal> {
         try {
-          const sql = "DELETE FROM mazdurr.proposals WHERE proposalid = $1";
+          const sql = "DELETE FROM proposals WHERE proposalid = $1";
           const conn = await pool.connect();
 
           const result = await conn.query(sql, [proposalid]);
@@ -98,7 +98,7 @@ export class ProposalStore {
       async readProposalsForUser(userid: number) {
         try {
           const sql = "SELECT p.proposalid, p.gigid, p.coverletter, p.bidamount, p.status, p.datesubmitted, \
-            g.title as gigtitle FROM mazdurr.proposals p JOIN mazdurr.gigs g ON p.gigid = g.gigid \
+            g.title as gigtitle FROM proposals p JOIN gigs g ON p.gigid = g.gigid \
             WHERE g.userid = $1"
 
           const conn = await pool.connect();
@@ -116,7 +116,7 @@ export class ProposalStore {
       async readProposalsForPUser(userid: number) {
         try {
           const sql = "SELECT p.proposalid, p.gigid, p.coverletter, p.bidamount, p.status, p.datesubmitted, \
-            g.title as gigtitle FROM mazdurr.proposals p JOIN mazdurr.gigs g ON p.gigid = g.gigid \
+            g.title as gigtitle FROM proposals p JOIN gigs g ON p.gigid = g.gigid \
             WHERE p.userid = $1"
 
           const conn = await pool.connect();
@@ -135,7 +135,7 @@ export class ProposalStore {
 
         try {
 
-          const sql = "UPDATE mazdurr.proposals SET status = $1 WHERE proposalid = $2 RETURNING *"
+          const sql = "UPDATE proposals SET status = $1 WHERE proposalid = $2 RETURNING *"
 
           const conn = await pool.connect();
 
@@ -154,7 +154,7 @@ export class ProposalStore {
         try {
 
           const sql = "SELECT p.proposalid, p.gigid, p.coverletter, p.bidamount, p.status, p.datesubmitted,g.title, \
-          g.type FROM mazdurr.proposals p JOIN mazdurr.gigs g ON p.gigid = g.gigid WHERE p.userid = $1"
+          g.type FROM proposals p JOIN gigs g ON p.gigid = g.gigid WHERE p.userid = $1"
 
 
           const conn = await pool.connect();
@@ -173,7 +173,7 @@ export class ProposalStore {
         try {
 
           const sql = "SELECT p.proposalid, p.gigid, p.coverletter, p.bidamount, p.status, p.datesubmitted,g.title, \
-          g.type FROM mazdurr.proposals p JOIN mazdurr.gigs g ON p.gigid = g.gigid WHERE g.userid = $1"
+          g.type FROM proposals p JOIN gigs g ON p.gigid = g.gigid WHERE g.userid = $1"
 
 
           const conn = await pool.connect();

@@ -1,8 +1,8 @@
 /* Replace with your SQL commands */
 
-CREATE TABLE mazdurr.gigs (
+CREATE TABLE gigs (
     GigID SERIAL PRIMARY KEY,
-    UserID INT REFERENCES mazdurr.users(UserID),
+    UserID INT REFERENCES users(UserID),
     Title VARCHAR(100) NOT NULL,
     Description TEXT,
     Type TEXT,

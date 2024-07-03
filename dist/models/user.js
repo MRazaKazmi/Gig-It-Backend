@@ -26,7 +26,7 @@ class UserStore {
             const passwordHash = bcrypt_1.default.hashSync(newUser.password + pepper, parseInt(saltRounds));
             const conn = yield database_1.default.connect();
             try {
-                const sql = 'INSERT INTO mazdurr.users (username, email, password, usertype) VALUES ($1, $2, $3, $4) RETURNING *';
+                const sql = 'INSERT INTO users (username, email, password, usertype) VALUES ($1, $2, $3, $4) RETURNING *';
                 const result = yield conn.query(sql, [
                     newUser.username,
                     newUser.email,
@@ -48,7 +48,7 @@ class UserStore {
         return __awaiter(this, void 0, void 0, function* () {
             const conn = yield database_1.default.connect();
             try {
-                const sql = 'SELECT * FROM mazdurr.users';
+                const sql = 'SELECT * FROM users';
                 const result = yield conn.query(sql);
                 conn.release();
                 return result.rows;
@@ -64,7 +64,7 @@ class UserStore {
         return __awaiter(this, void 0, void 0, function* () {
             const conn = yield database_1.default.connect();
             try {
-                const sql = 'SELECT * FROM mazdurr.users WHERE userid=$1';
+                const sql = 'SELECT * FROM users WHERE userid=$1';
                 const result = yield conn.query(sql, [userid]);
                 conn.release();
                 return result.rows[0];
@@ -79,7 +79,7 @@ class UserStore {
     delete(userid) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const sql = "DELETE FROM mazdurr.users WHERE userid = $1";
+                const sql = "DELETE FROM users WHERE userid = $1";
                 const conn = yield database_1.default.connect();
                 const result = yield conn.query(sql, [userid]);
                 const user = result.rows[0];
@@ -94,7 +94,7 @@ class UserStore {
     authenticate(email, password) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const sql = "SELECT * FROM mazdurr.users WHERE email = $1";
+                const sql = "SELECT * FROM users WHERE email = $1";
                 const connection = yield database_1.default.connect();
                 const { rows } = yield connection.query(sql, [email]);
                 console.log(rows);

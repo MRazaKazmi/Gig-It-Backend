@@ -15,17 +15,7 @@ export function createUserAuthToken (user: User) {
 
   return jwt.sign(payload, SECRET, options);
 };
-// export function createUserAuthToken (user: User) {
-//   return jwt.sign(
-//     {
-//       userid: user.userid,
-//       usertype: user.usertype, // Include usertype in the payload
-//       email: user.email
-//     },
-//     SECRET,
-//     { expiresIn: '1h' }
-//   );
-// };
+
 export function verifyAuthToken (req: Request, res: Response, next: NextFunction): void | boolean {
   if (!req.headers.authorization) {
 

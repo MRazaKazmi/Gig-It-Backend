@@ -19,7 +19,7 @@ class ProposalStore {
         return __awaiter(this, void 0, void 0, function* () {
             const conn = yield database_1.default.connect();
             try {
-                const sql = 'INSERT INTO mazdurr.proposals (userid, gigid, coverletter, bidamount, status, datesubmitted) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *';
+                const sql = 'INSERT INTO proposals (userid, gigid, coverletter, bidamount, status, datesubmitted) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *';
                 const result = yield conn.query(sql, [
                     newProposal.userid,
                     newProposal.gigid,
@@ -43,7 +43,7 @@ class ProposalStore {
         return __awaiter(this, void 0, void 0, function* () {
             const conn = yield database_1.default.connect();
             try {
-                const sql = 'SELECT * FROM mazdurr.proposals WHERE gigid=$1';
+                const sql = 'SELECT * FROM proposals WHERE gigid=$1';
                 const result = yield conn.query(sql, [gigid]);
                 conn.release();
                 return result.rows;
@@ -59,7 +59,7 @@ class ProposalStore {
         return __awaiter(this, void 0, void 0, function* () {
             const conn = yield database_1.default.connect();
             try {
-                const sql = 'SELECT * FROM mazdurr.proposals WHERE proposalid=$1';
+                const sql = 'SELECT * FROM proposals WHERE proposalid=$1';
                 const result = yield conn.query(sql, [proposalid]);
                 conn.release();
                 return result.rows[0];
@@ -74,7 +74,7 @@ class ProposalStore {
     delete(proposalid) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const sql = "DELETE FROM mazdurr.proposals WHERE proposalid = $1";
+                const sql = "DELETE FROM proposals WHERE proposalid = $1";
                 const conn = yield database_1.default.connect();
                 const result = yield conn.query(sql, [proposalid]);
                 const user = result.rows[0];
@@ -90,7 +90,7 @@ class ProposalStore {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const sql = "SELECT p.proposalid, p.gigid, p.coverletter, p.bidamount, p.status, p.datesubmitted, \
-            g.title as gigtitle FROM mazdurr.proposals p JOIN mazdurr.gigs g ON p.gigid = g.gigid \
+            g.title as gigtitle FROM proposals p JOIN gigs g ON p.gigid = g.gigid \
             WHERE g.userid = $1";
                 const conn = yield database_1.default.connect();
                 const result = yield conn.query(sql, [userid]);
@@ -106,7 +106,7 @@ class ProposalStore {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const sql = "SELECT p.proposalid, p.gigid, p.coverletter, p.bidamount, p.status, p.datesubmitted, \
-            g.title as gigtitle FROM mazdurr.proposals p JOIN mazdurr.gigs g ON p.gigid = g.gigid \
+            g.title as gigtitle FROM proposals p JOIN gigs g ON p.gigid = g.gigid \
             WHERE p.userid = $1";
                 const conn = yield database_1.default.connect();
                 const result = yield conn.query(sql, [userid]);
@@ -121,7 +121,7 @@ class ProposalStore {
     updateProposalStatus(status, proposalid) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const sql = "UPDATE mazdurr.proposals SET status = $1 WHERE proposalid = $2 RETURNING *";
+                const sql = "UPDATE proposals SET status = $1 WHERE proposalid = $2 RETURNING *";
                 const conn = yield database_1.default.connect();
                 const result = yield conn.query(sql, [status, proposalid]);
                 conn.release();
@@ -136,7 +136,7 @@ class ProposalStore {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const sql = "SELECT p.proposalid, p.gigid, p.coverletter, p.bidamount, p.status, p.datesubmitted,g.title, \
-          g.type FROM mazdurr.proposals p JOIN mazdurr.gigs g ON p.gigid = g.gigid WHERE p.userid = $1";
+          g.type FROM proposals p JOIN gigs g ON p.gigid = g.gigid WHERE p.userid = $1";
                 const conn = yield database_1.default.connect();
                 const result = yield conn.query(sql, [userid]);
                 conn.release();
@@ -151,7 +151,7 @@ class ProposalStore {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const sql = "SELECT p.proposalid, p.gigid, p.coverletter, p.bidamount, p.status, p.datesubmitted,g.title, \
-          g.type FROM mazdurr.proposals p JOIN mazdurr.gigs g ON p.gigid = g.gigid WHERE g.userid = $1";
+          g.type FROM proposals p JOIN gigs g ON p.gigid = g.gigid WHERE g.userid = $1";
                 const conn = yield database_1.default.connect();
                 const result = yield conn.query(sql, [userid]);
                 conn.release();

@@ -18,17 +18,6 @@ function createUserAuthToken(user) {
 }
 exports.createUserAuthToken = createUserAuthToken;
 ;
-// export function createUserAuthToken (user: User) {
-//   return jwt.sign(
-//     {
-//       userid: user.userid,
-//       usertype: user.usertype, // Include usertype in the payload
-//       email: user.email
-//     },
-//     SECRET,
-//     { expiresIn: '1h' }
-//   );
-// };
 function verifyAuthToken(req, res, next) {
     if (!req.headers.authorization) {
         console.log(req.headers);

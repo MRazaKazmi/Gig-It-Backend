@@ -19,7 +19,7 @@ class GigStore {
         return __awaiter(this, void 0, void 0, function* () {
             const conn = yield database_1.default.connect();
             try {
-                const sql = 'INSERT INTO mazdurr.gigs (userid, title, description, type, location, budget, dateposted, status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *';
+                const sql = 'INSERT INTO gigs (userid, title, description, type, location, budget, dateposted, status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *';
                 const result = yield conn.query(sql, [
                     newGig.userid,
                     newGig.title,
@@ -45,7 +45,7 @@ class GigStore {
         return __awaiter(this, void 0, void 0, function* () {
             const conn = yield database_1.default.connect();
             try {
-                const sql = 'SELECT * FROM mazdurr.gigs';
+                const sql = 'SELECT * FROM gigs';
                 const result = yield conn.query(sql);
                 conn.release();
                 return result.rows;
@@ -61,7 +61,7 @@ class GigStore {
         return __awaiter(this, void 0, void 0, function* () {
             const conn = yield database_1.default.connect();
             try {
-                const sql = 'SELECT * FROM mazdurr.gigs WHERE gigid=$1';
+                const sql = 'SELECT * FROM gigs WHERE gigid=$1';
                 const result = yield conn.query(sql, [gigid]);
                 conn.release();
                 return result.rows[0];
@@ -76,7 +76,7 @@ class GigStore {
     delete(gigid) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const sql = "DELETE FROM mazdurr.gigs WHERE gigid = $1";
+                const sql = "DELETE FROM gigs WHERE gigid = $1";
                 const conn = yield database_1.default.connect();
                 const result = yield conn.query(sql, [gigid]);
                 const user = result.rows[0];
@@ -91,7 +91,7 @@ class GigStore {
     updateGigStatus(status, gigid) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const sql = "UPDATE mazdurr.gigs SET status = $1 WHERE gigid = $2 RETURNING *";
+                const sql = "UPDATE gigs SET status = $1 WHERE gigid = $2 RETURNING *";
                 const conn = yield database_1.default.connect();
                 const result = yield conn.query(sql, [status, gigid]);
                 conn.release();
