@@ -11,7 +11,7 @@ const proposal_1 = __importDefault(require("./handlers/proposal"));
 const cors = require('cors');
 const app = (0, express_1.default)();
 app.use(cors());
-let port = 80;
+var port = process.env.PORT || 3000;
 if (process.env.ENV === "test") {
     port = 81;
 }

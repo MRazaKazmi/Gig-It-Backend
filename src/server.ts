@@ -13,7 +13,7 @@ const app = express()
 
 app.use(cors());
 
-let port: number = 80
+var port = process.env.PORT || 3000;
 
 if (process.env.ENV === "test") {
   port = 81
