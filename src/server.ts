@@ -1,8 +1,5 @@
 import express, { Request, Response } from 'express'
 import bodyParser from 'body-parser'
-
-import path from "path"
-
 import userRoutes from "./handlers/user"
 import GigRoutes from "./handlers/gig"
 import ProposalRoutes from "./handlers/proposal"
@@ -11,7 +8,9 @@ const cors = require('cors');
 
 const app = express()
 
-app.use(cors());
+app.use(cors({
+  origin: 'http://gig-it.s3-website.eu-north-1.amazonaws.com'
+}));
 
 var port = process.env.PORT || 3000;
 
