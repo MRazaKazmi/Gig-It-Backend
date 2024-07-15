@@ -10,7 +10,9 @@ const gig_1 = __importDefault(require("./handlers/gig"));
 const proposal_1 = __importDefault(require("./handlers/proposal"));
 const cors = require('cors');
 const app = (0, express_1.default)();
-app.use(cors());
+app.use(cors({
+    origin: 'http://gig-it.s3-website.eu-north-1.amazonaws.com'
+}));
 var port = process.env.PORT || 3000;
 if (process.env.ENV === "test") {
     port = 81;
