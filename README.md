@@ -8,6 +8,11 @@ GigIt is your one-stop marketplace for all construction-related gigs. Whether yo
 - `npm run build` to build the app,
 - `npm run start` to start the app,
 - `npm run test` to run all the tests
+
+## Project Deployment
+- Frontend: S3
+- Backend: Elastic Beanstalk
+- Database: RDS
   
 ## Author
 Raza Kazmi
