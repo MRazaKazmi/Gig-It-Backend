@@ -10,9 +10,9 @@ GigIt is your one-stop marketplace for all construction-related gigs. Whether yo
 - `npm run test` to run all the tests
 
 ## Project Deployment
-- Frontend: S3
-- Backend: Elastic Beanstalk
-- Database: RDS
+- Frontend: AWS S3
+- Backend: AWS Elastic Beanstalk
+- Database: AWS RDS
   
 ## Author
 Raza Kazmi
